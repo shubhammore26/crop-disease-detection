@@ -43,7 +43,13 @@
     {% if message %}
         <p style="color: green;"><strong>{{ message }}</strong></p>
     {% endif %}
-    </div>
+
+    {% if image_url %}
+        <img src="{{ image_url }}" alt="Uploaded Image"
+             style="margin-top: 15px; max-width: 100%; border-radius: 8px;">
+    {% endif %}
+</div>
+
 </main>
 
 <!-- ================= FOOTER ================= -->
