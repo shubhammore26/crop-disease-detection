@@ -40,7 +40,9 @@
     </form>
 
     <div class="result">
-        <!-- Prediction result will appear here later -->
+    {% if message %}
+        <p style="color: green;"><strong>{{ message }}</strong></p>
+    {% endif %}
     </div>
 </main>
 
