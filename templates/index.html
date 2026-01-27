@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Crop Disease Detection</title>
 
-    <!-- Mobile friendly -->
+    <!-- Mobile first -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- CSS -->
@@ -12,19 +12,78 @@
 </head>
 <body>
 
-<div class="container">
-    <h1>🌱 Crop Disease Detection</h1>
-    <p>Upload a leaf image to detect disease</p>
+<!-- ================= HEADER ================= -->
+<header class="header">
+    <div class="logo">🌱 CropCare AI</div>
+
+    <div class="header-right">
+        <select id="languageSelect">
+            <option value="en">English</option>
+            <option value="hi">हिंदी</option>
+            <option value="mr">मराठी</option>
+        </select>
+
+        <div class="profile">
+            👤 User
+        </div>
+    </div>
+</header>
+
+<!-- ================= MAIN ================= -->
+<main class="main">
+    <h2 id="titleText">Crop Disease Detection</h2>
+    <p id="subtitleText">Upload a leaf image to detect disease</p>
 
     <form method="post" enctype="multipart/form-data">
         <input type="file" name="image" required>
-        <button type="submit">Predict</button>
+        <button type="submit" id="predictBtn">Predict Disease</button>
     </form>
 
-    <p class="disclaimer">
-        ⚠️ Advisory only. Consult an agriculture expert.
+    <div class="result">
+        <!-- Prediction result will appear here later -->
+    </div>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+    <p id="footerText">
+        ⚠️ Advisory only. Please consult an agriculture expert.
     </p>
-</div>
+    <p class="small">
+        IEEE Hackathon 2026 | AI/ML Domain
+    </p>
+</footer>
+
+<!-- ================= SIMPLE LANGUAGE SCRIPT ================= -->
+<script>
+    const languageSelect = document.getElementById("languageSelect");
+
+    languageSelect.addEventListener("change", function () {
+        if (this.value === "hi") {
+            document.getElementById("titleText").innerText = "फसल रोग पहचान";
+            document.getElementById("subtitleText").innerText = "पत्ते की तस्वीर अपलोड करें";
+            document.getElementById("predictBtn").innerText = "रोग पहचानें";
+            document.getElementById("footerText").innerText =
+                "⚠️ यह केवल सलाह के लिए है। कृषि विशेषज्ञ से संपर्क करें।";
+        }
+        else if (this.value === "mr") {
+            document.getElementById("titleText").innerText = "पीक रोग ओळख";
+            document.getElementById("subtitleText").innerText = "पानाची प्रतिमा अपलोड करा";
+            document.getElementById("predictBtn").innerText = "रोग ओळखा";
+            document.getElementById("footerText").innerText =
+                "⚠️ ही माहिती केवळ सल्ल्यासाठी  आहे. कृपया कृषी तज्ज्ञांचा सल्ला घ्या.";
+        }
+        else {
+            document.getElementById("titleText").innerText = "Crop Disease Detection";
+            document.getElementById("subtitleText").innerText =
+                "Upload a leaf image to detect disease";
+            document.getElementById("predictBtn").innerText = "Predict Disease";
+            document.getElementById("footerText").innerText =
+                "⚠️ Advisory only. Please consult an agriculture expert.";
+        }
+    });
+</script>
+
 
 </body>
 </html>
