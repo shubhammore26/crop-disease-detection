@@ -40,15 +40,29 @@
     </form>
 
     <div class="result">
-    {% if message %}
-        <p style="color: green;"><strong>{{ message }}</strong></p>
-    {% endif %}
 
-    {% if image_url %}
-        <img src="{{ image_url }}" alt="Uploaded Image"
-             style="margin-top: 15px; max-width: 100%; border-radius: 8px;">
-    {% endif %}
-</div>
+        {% if message %}
+            <p style="color: green; font-weight: bold;">
+                {{ message }}
+            </p>
+        {% endif %}
+
+        {% if image_url %}
+            <img src="{{ image_url }}"
+                alt="Uploaded Image"
+                style="margin-top: 15px; max-width: 100%; border-radius: 8px;">
+        {% endif %}
+
+        {% if prediction %}
+            <p style="margin-top: 12px; font-size: 18px;">
+                <strong>Disease Detected:</strong> {{ prediction }}
+            </p>
+
+            
+        {% endif %}
+
+    </div>
+
 
 </main>
 
