@@ -14,7 +14,7 @@
 
 <!-- ================= HEADER ================= -->
 <header class="header">
-    <div class="logo">🌱 CropCare AI</div>
+    <div class="logo" id="logoText">🌱 CropCare AI</div>
 
     <div class="header-right">
         <select id="languageSelect">
@@ -22,90 +22,186 @@
             <option value="hi">हिंदी</option>
             <option value="mr">मराठी</option>
         </select>
-
-        <div class="profile">
-            👤 User
-        </div>
+        <div class="profile" id="profileText">👤 User</div>
     </div>
 </header>
 
-<!-- ================= MAIN ================= -->
-<main class="main">
-    <h2 id="titleText">Crop Disease Detection</h2>
-    <p id="subtitleText">Upload a leaf image to detect disease</p>
+<!-- ================= DASHBOARD ================= -->
+<div class="dashboard">
 
-    <form method="post" enctype="multipart/form-data">
-        <input type="file" name="image" required>
-        <button type="submit" id="predictBtn">Predict Disease</button>
-    </form>
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar">
+        <ul>
+            <li class="active" id="navDashboard">🏠 Dashboard</li>
+            <li id="navDetect">🌿 Detect Disease</li>
+            <li id="navHistory">📊 History</li>
+            <li id="navAbout">ℹ️ About</li>
+            <li id="navSettings">⚙️ Settings</li>
+        </ul>
+    </aside>
 
-    <div class="result">
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="dashboard-main">
 
-        {% if message %}
-            <p style="color: green; font-weight: bold;">
-                {{ message }}
+        <!-- DASHBOARD CARDS -->
+        <div class="cards">
+            <div class="card">
+                <h4 id="card1Title">Supported Crops</h4>
+                <p id="card1Text">Tomato, Potato, Pepper</p>
+            </div>
+            <div class="card">
+                <h4 id="card2Title">Mode</h4>
+                <p id="card2Text">Offline AI</p>
+            </div>
+            <div class="card">
+                <h4 id="card3Title">Status</h4>
+                <p id="card3Text">System Ready</p>
+            </div>
+        </div>
+
+        <!-- ===== PREDICTION PANEL ===== -->
+        <section class="panel">
+
+            <h2 id="titleText">Crop Disease Detection</h2>
+            <p id="subtitleText">Upload a leaf image to detect disease</p>
+
+            <p class="supported" id="supportedText">
+                Supported crops: Tomato, Potato, Pepper
             </p>
-        {% endif %}
 
-        {% if image_url %}
-            <img src="{{ image_url }}"
-                alt="Uploaded Image"
-                style="margin-top: 15px; max-width: 100%; border-radius: 8px;">
-        {% endif %}
+            <form method="post" enctype="multipart/form-data">
+                <p class="hint" id="hintText">
+                    Tip: Upload a clear leaf image with visible spots.
+                </p>
 
-        {% if prediction %}
-            <p style="margin-top: 12px; font-size: 18px;">
-                <strong>Disease Detected:</strong> {{ prediction }}
-            </p>
+                <input type="file" name="image" required>
 
-            
-        {% endif %}
+                <button type="submit" id="predictBtn">Detect Disease</button>
 
-    </div>
+                <p id="loadingText" class="loading">
+                    🔄 Processing image...
+                </p>
+            </form>
 
+            <div class="result">
+                {% if message %}
+                    <p class="success">{{ message }}</p>
+                {% endif %}
+                {% if image_url %}
+                    <img src="{{ image_url }}" alt="Uploaded Image">
+                {% endif %}
+                {% if prediction %}
+                    <p class="prediction">
+                        <strong>Disease Detected:</strong> {{ prediction }}
+                    </p>
+                {% endif %}
+            </div>
+        </section>
 
-</main>
+    </main>
+</div>
 
 <!-- ================= FOOTER ================= -->
 <footer class="footer">
     <p id="footerText">
         ⚠️ Advisory only. Please consult an agriculture expert.
     </p>
-    <p class="small">
+    <p class="small" id="footerSmall">
         IEEE Hackathon 2026 | AI/ML Domain
     </p>
 </footer>
 
-<!-- ================= SIMPLE LANGUAGE SCRIPT ================= -->
+<!-- ================= LANGUAGE SCRIPT (MAIN PART) ================= -->
 <script>
-    const languageSelect = document.getElementById("languageSelect");
+const translations = {
+    en: {
+        logoText: "🌱 CropCare AI",
+        profileText: "👤 User",
+        navDashboard: "🏠 Dashboard",
+        navDetect: "🌿 Detect Disease",
+        navHistory: "📊 History",
+        navAbout: "ℹ️ About",
+        navSettings: "⚙️ Settings",
+        card1Title: "Supported Crops",
+        card1Text: "Tomato, Potato, Pepper",
+        card2Title: "Mode",
+        card2Text: "Offline AI",
+        card3Title: "Status",
+        card3Text: "System Ready",
+        titleText: "Crop Disease Detection",
+        subtitleText: "Upload a leaf image to detect disease",
+        supportedText: "Supported crops: Tomato, Potato, Pepper",
+        hintText: "Tip: Upload a clear leaf image with visible spots.",
+        predictBtn: "Predict Disease",
+        footerText: "⚠️ Advisory only. Please consult an agriculture expert.",
+        footerSmall: "IEEE Hackathon 2026 | AI/ML Domain"
+    },
 
-    languageSelect.addEventListener("change", function () {
-        if (this.value === "hi") {
-            document.getElementById("titleText").innerText = "फसल रोग पहचान";
-            document.getElementById("subtitleText").innerText = "पत्ते की तस्वीर अपलोड करें";
-            document.getElementById("predictBtn").innerText = "रोग पहचानें";
-            document.getElementById("footerText").innerText =
-                "⚠️ यह केवल सलाह के लिए है। कृषि विशेषज्ञ से संपर्क करें।";
-        }
-        else if (this.value === "mr") {
-            document.getElementById("titleText").innerText = "पीक रोग ओळख";
-            document.getElementById("subtitleText").innerText = "पानाची प्रतिमा अपलोड करा";
-            document.getElementById("predictBtn").innerText = "रोग ओळखा";
-            document.getElementById("footerText").innerText =
-                "⚠️ ही माहिती केवळ सल्ल्यासाठी  आहे. कृपया कृषी तज्ज्ञांचा सल्ला घ्या.";
-        }
-        else {
-            document.getElementById("titleText").innerText = "Crop Disease Detection";
-            document.getElementById("subtitleText").innerText =
-                "Upload a leaf image to detect disease";
-            document.getElementById("predictBtn").innerText = "Predict Disease";
-            document.getElementById("footerText").innerText =
-                "⚠️ Advisory only. Please consult an agriculture expert.";
-        }
-    });
+    hi: {
+        logoText: "🌱 क्रॉपकेयर एआई",
+        profileText: "👤 उपयोगकर्ता",
+        navDashboard: "🏠 डैशबोर्ड",
+        navDetect: "🌿 रोग पहचान",
+        navHistory: "📊 इतिहास",
+        navAbout: "ℹ️ जानकारी",
+        navSettings: "⚙️ सेटिंग्स",
+        card1Title: "समर्थित फसलें",
+        card1Text: "टमाटर, आलू, मिर्च",
+        card2Title: "मोड",
+        card2Text: "ऑफलाइन एआई",
+        card3Title: "स्थिति",
+        card3Text: "सिस्टम तैयार",
+        titleText: "फसल रोग पहचान",
+        subtitleText: "रोग पहचान के लिए पत्ते की तस्वीर अपलोड करें",
+        supportedText: "समर्थित फसलें: टमाटर, आलू, मिर्च",
+        hintText: "सुझाव: साफ पत्ते की तस्वीर अपलोड करें।",
+        predictBtn: "रोग पहचानें",
+        footerText: "⚠️ यह केवल सलाह के लिए है। कृपया कृषि विशेषज्ञ से संपर्क करें।",
+        footerSmall: "IEEE हैकाथॉन 2026 | AI/ML डोमेन"
+    },
+
+    mr: {
+        logoText: "🌱 क्रॉपकेअर एआय",
+        profileText: "👤 वापरकर्ता",
+        navDashboard: "🏠 डॅशबोर्ड",
+        navDetect: "🌿 रोग ओळख",
+        navHistory: "📊 इतिहास",
+        navAbout: "ℹ️ माहिती",
+        navSettings: "⚙️ सेटिंग्स",
+        card1Title: "समर्थित पिके",
+        card1Text: "टोमॅटो, बटाटा, मिरची",
+        card2Title: "मोड",
+        card2Text: "ऑफलाइन एआय",
+        card3Title: "स्थिती",
+        card3Text: "सिस्टम तयार",
+        titleText: "पीक रोग ओळख",
+        subtitleText: "रोग ओळखण्यासाठी पानाची प्रतिमा अपलोड करा",
+        supportedText: "समर्थित पिके: टोमॅटो, बटाटा, मिरची",
+        hintText: "सूचना: स्पष्ट पानाची प्रतिमा अपलोड करा.",
+        predictBtn: "रोग ओळखा",
+        footerText: "⚠️ ही माहिती केवळ सल्ल्यासाठी आहे. कृपया कृषी तज्ज्ञांचा सल्ला घ्या.",
+        footerSmall: "IEEE हॅकाथॉन 2026 | AI/ML डोमेन"
+    }
+};
+
+const languageSelect = document.getElementById("languageSelect");
+
+languageSelect.addEventListener("change", function () {
+    const lang = this.value;
+    const elements = translations[lang];
+
+    for (let id in elements) {
+        document.getElementById(id).innerText = elements[id];
+    }
+});
 </script>
 
+<!-- ================= LOADING SCRIPT ================= -->
+<script>
+document.querySelector("form").addEventListener("submit", function () {
+    document.getElementById("loadingText").style.display = "block";
+});
+</script>
 
 </body>
 </html>

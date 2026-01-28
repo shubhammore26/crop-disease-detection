@@ -37,14 +37,65 @@ select {
     font-size: 14px;
 }
 
-/* ---------- MAIN ---------- */
-.main {
-    max-width: 400px;
-    margin: 30px auto;
+/* ---------- DASHBOARD ---------- */
+.dashboard {
+    display: flex;
+    min-height: calc(100vh - 120px);
+}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar {
+    width: 220px;
+    background: #1b5e20;
+    color: white;
+    padding-top: 20px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar li {
+    padding: 15px 20px;
+    cursor: pointer;
+}
+
+.sidebar li:hover,
+.sidebar .active {
+    background: #388e3c;
+}
+
+/* ---------- MAIN AREA ---------- */
+.dashboard-main {
+    flex: 1;
+    padding: 20px;
+}
+
+/* ---------- CARDS ---------- */
+.cards {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.card {
     background: white;
+    padding: 15px;
+    border-radius: 8px;
+    flex: 1;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* ---------- PANEL ---------- */
+.panel {
+    background: white;
+    max-width: 450px;
+    margin: auto;
     padding: 20px;
     border-radius: 10px;
     text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 input {
@@ -66,6 +117,51 @@ button:hover {
     background: #256428;
 }
 
+/* ---------- RESULT ---------- */
+.result img {
+    max-width: 100%;
+    margin-top: 15px;
+    border-radius: 8px;
+}
+
+.success {
+    color: green;
+    font-weight: bold;
+}
+
+.prediction {
+    margin-top: 12px;
+    font-size: 18px;
+}
+
+.confidence {
+    font-size: 14px;
+    color: #555;
+}
+
+.warning {
+    color: orange;
+    font-size: 14px;
+}
+
+.retry {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+}
+
+.loading {
+    display: none;
+    color: green;
+    margin-top: 8px;
+}
+
+.hint,
+.supported {
+    font-size: 13px;
+    color: gray;
+}
+
 /* ---------- FOOTER ---------- */
 .footer {
     text-align: center;
@@ -77,4 +173,14 @@ button:hover {
 .small {
     font-size: 11px;
     color: #777;
+}
+
+/* ---------- MOBILE ---------- */
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+    .cards {
+        flex-direction: column;
+    }
 }
