@@ -70,7 +70,8 @@
             </p>
 
             <form method="post" enctype="multipart/form-data">
-                <p class="hint" id="hintText">
+                <input type="hidden" name="lang" id="langInput">
+
                     Tip: Upload a clear leaf image with visible spots.
                 </p>
 
@@ -84,18 +85,30 @@
             </form>
 
             <div class="result">
-                {% if message %}
-                    <p class="success">{{ message }}</p>
-                {% endif %}
-                {% if image_url %}
-                    <img src="{{ image_url }}" alt="Uploaded Image">
-                {% endif %}
-                {% if prediction %}
-                    <p class="prediction">
-                        <strong>Disease Detected:</strong> {{ prediction }}
-                    </p>
-                {% endif %}
-            </div>
+
+    {% if message %}
+        <p class="success">{{ message }}</p>
+    {% endif %}
+
+    {% if image_url %}
+        <img src="{{ image_url }}" alt="Uploaded Image">
+    {% endif %}
+
+    {% if prediction %}
+        <p class="prediction">
+            <strong>Disease Detected:</strong> {{ prediction }}
+        </p>
+    {% endif %}
+
+    {% if treatment %}
+        <div class="treatment-box">
+            <h4>🌾 Recommended Treatment</h4>
+            <p>{{ treatment }}</p>
+        </div>
+    {% endif %}
+
+</div>
+
         </section>
 
     </main>
@@ -111,7 +124,6 @@
     </p>
 </footer>
 
-<!-- ================= LANGUAGE SCRIPT (MAIN PART) ================= -->
 <script>
 const translations = {
     en: {
@@ -136,7 +148,6 @@ const translations = {
         footerText: "⚠️ Advisory only. Please consult an agriculture expert.",
         footerSmall: "IEEE Hackathon 2026 | AI/ML Domain"
     },
-
     hi: {
         logoText: "🌱 क्रॉपकेयर एआई",
         profileText: "👤 उपयोगकर्ता",
@@ -159,7 +170,6 @@ const translations = {
         footerText: "⚠️ यह केवल सलाह के लिए है। कृपया कृषि विशेषज्ञ से संपर्क करें।",
         footerSmall: "IEEE हैकाथॉन 2026 | AI/ML डोमेन"
     },
-
     mr: {
         logoText: "🌱 क्रॉपकेअर एआय",
         profileText: "👤 वापरकर्ता",
@@ -186,22 +196,30 @@ const translations = {
 
 const languageSelect = document.getElementById("languageSelect");
 
+function applyLanguage(lang) {
+    const elements = translations[lang];
+    for (let id in elements) {
+        const el = document.getElementById(id);
+        if (el) el.innerText = elements[id];
+    }
+}
+
+
+// On language change
 languageSelect.addEventListener("change", function () {
     const lang = this.value;
-    const elements = translations[lang];
+    localStorage.setItem("selectedLanguage", lang);
+    applyLanguage(lang);
+});
 
-    for (let id in elements) {
-        document.getElementById(id).innerText = elements[id];
-    }
+// On page load → restore saved language
+window.addEventListener("load", function () {
+    const savedLang = localStorage.getItem("selectedLanguage") || "en";
+    languageSelect.value = savedLang;
+    applyLanguage(savedLang);
 });
 </script>
 
-<!-- ================= LOADING SCRIPT ================= -->
-<script>
-document.querySelector("form").addEventListener("submit", function () {
-    document.getElementById("loadingText").style.display = "block";
-});
-</script>
 
 </body>
 </html>
